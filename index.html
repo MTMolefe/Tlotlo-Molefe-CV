@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tlotlo Molefe | Full Stack Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #000;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+            padding: 0 40px;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero h1 {
+            font-size: 5em;
+            color: #fff;
+            margin-bottom: 30px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .hero-description {
+            font-size: 1.4em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: white;
+            padding: 18px 45px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-subtitle {
+            color: #667eea;
+            font-size: 0.95em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 3em;
+            color: #fff;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        #about {
+            background: #0a0a0a;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1em;
+            line-height: 1.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1em;
+        }
+
+        /* Skills Section */
+        #skills {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-10px);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .skill-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .skill-card h3 {
+            color: #fff;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .skill-card p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+        }
+
+        /* Experience Section */
+        #experience {
+            background: #0a0a0a;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin-top: 60px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            padding-left: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -56px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 4px solid #0a0a0a;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-date {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            color: #fff;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .timeline-company {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .timeline-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-list li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .timeline-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Education Section */
+        #education {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .education-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .education-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .education-degree {
+            color: #fff;
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .education-school {
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .education-date {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 25px;
+        }
+
+        .education-subjects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .subject-tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Certifications Section */
+        #certifications {
+            background: #0a0a0a;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+        }
+
+        .cert-badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .cert-badge:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: scale(1.05);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .cert-badge-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .cert-badge p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+        }
+
+        #contact .section-title,
+        #contact .section-description {
+            color: #fff;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .contact-item h3 {
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .contact-item a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 40px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3em;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.2em;
+            }
+
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                padding-left: 30px;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">TM</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Get In Touch</a>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">Full Stack Developer</div>
+            <h1>Tlotlo Molefe</h1>
+            <p class="hero-description">
+                Cloud-focused full-stack developer with hands-on experience in ASP.NET Core, Azure, observability, and CI/CD; proven ability to design multi-tier, testable, secure, and maintainable solutions.
+            </p>
+            <div class="hero-buttons">
+                <a href="#contact" class="primary-btn">Let's Connect</a>
+                <a href="#experience" class="secondary-btn">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <div class="section-subtitle">Who I Am</div>
+            <h2 class="section-title">About Me</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p style="margin-bottom: 20px;">
+                    I'm a passionate full-stack developer specializing in cloud technologies and modern web development. Currently pursuing my Advanced Diploma in Information Technology while gaining hands-on experience at Dynamic DNA.
+                </p>
+                <p>
+                    My expertise spans across ASP.NET Core, Azure cloud services, and modern front-end frameworks. I thrive in Agile environments and am committed to writing clean, maintainable, and testable code that delivers real business value.
+                </p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">Certifications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Commitment</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Learning</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-header">
+            <div class="section-subtitle">What I Do</div>
+            <h2 class="section-title">Skills & Expertise</h2>
+            <p class="section-description">
+                A comprehensive toolkit for building modern, scalable applications
+            </p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">💻</div>
+                <h3>Backend Development</h3>
+                <p>ASP.NET Core MVC, Entity Framework, ADO.NET, RESTful APIs, SQL Server, PostgreSQL, MongoDB</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🎨</div>
+                <h3>Frontend Development</h3>
+                <p>React, Angular, JavaScript, HTML5, CSS3, Bootstrap, Razor Views, Responsive Design</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">☁️</div>
+                <h3>Cloud & DevOps</h3>
+                <p>Azure, CI/CD Pipelines, GitHub Actions, Jenkins, Azure DevOps, Docker, Microservices</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🔍</div>
+                <h3>Testing & Quality</h3>
+                <p>Unit Testing, Test Driven Development, Integration Testing, Code Reviews</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🗄️</div>
+                <h3>Database Design</h3>
+                <p>Relational Database Modeling, SQL Optimization, Data Migration, ORM Frameworks</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🚀</div>
+                <h3>Agile Methodology</h3>
+                <p>Scrum, Sprint Planning, Daily Standups, Backlog Grooming, Project Management</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="section-header">
+            <div class="section-subtitle">My Journey</div>
+            <h2 class="section-title">Work Experience</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">May 2024 - Present</div>
+                    <h3 class="timeline-title">System Development Intern</h3>
+                    <div class="timeline-company">Dynamic DNA • Randburg, Gauteng</div>
+                    <ul class="timeline-list">
+                        <li>Designed and implemented multi-tier ASP.NET Core solutions using layered architecture and repository pattern</li>
+                        <li>Built and consumed RESTful APIs ensuring secure and efficient data exchange</li>
+                        <li>Implemented CI/CD pipelines using GitHub Actions and Jenkins for automated testing and Azure deployments</li>
+                        <li>Optimized database queries and data retrieval using Entity Framework and ADO.NET</li>
+                        <li>Collaborated with UX designers to enhance interface usability and accessibility</li>
+                        <li>Participated in Agile ceremonies including daily standups, sprint planning, and code reviews</li>
+                        <li>Delivered features meeting user stories and acceptance criteria with automated validation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="section-header">
+            <div class="section-subtitle">Academic Background</div>
+            <h2 class="section-title">Education</h2>
+        </div>
+        <div class="education-grid">
+            <div class="education-card">
+                <div class="education-degree">Advanced Diploma: Information Technology</div>
+                <div class="education-school">Vaal University of Technology</div>
+                <div class="education-date">January 2025 - Present</div>
+                <div class="education-subjects">
+                    <span class="subject-tag">Computer Security</span>
+                    <span class="subject-tag">Emerging Technologies</span>
+                    <span class="subject-tag">IT Management</span>
+                    <span class="subject-tag">Advanced Software Design</span>
+                    <span class="subject-tag">Statistics for IT</span>
+                    <span class="subject-tag">Advanced Databases</span>
+                    <span class="subject-tag">UX Design</span>
+                </div>
+            </div>
+            <div class="education-card">
+                <div class="education-degree">Diploma: Information Technology</div>
+                <div class="education-school">Vaal University of Technology</div>
+                <div class="education-date">January 2021 - December 2023</div>
+                <div class="education-subjects">
+                    <span class="subject-tag">Business Analysis</span>
+                    <span class="subject-tag">Information Systems</span>
+                    <span class="subject-tag">Development Software</span>
+                    <span class="subject-tag">Programming Logic</span>
+                    <span class="subject-tag">System Software</span>
+                    <span class="subject-tag">Web Development</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications">
+        <div class="section-header">
+            <div class="section-subtitle">Professional Credentials</div>
+            <h2 class="section-title">Certifications</h2>
+        </div>
+        <div class="cert-grid">
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🏆</div>
+                <p>Microsoft Certified: Azure Developer Associate (AZ-204)</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">☁️</div>
+                <p>Microsoft Certified: Azure Fundamentals (AZ-900)</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">📊</div>
+                <p>Microsoft Certified: Power BI Data Analyst Associate (PL-300)</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">💼</div>
+                <p>Microsoft 365 Certified: Fundamentals (MS-900)</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🌐</div>
+                <p>CCNA: Core Networking</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🔄</div>
+                <p>CCNA: Switching, Routing and Wireless Essentials</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🤖</div>
+                <p>AWS Educate Machine Learning - DeepRacer</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🧠</div>
+                <p>AWS Educate Machine Learning Foundations</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🏗️</div>
+                <p>AWS Educate Web Builder</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">☁️</div>
+                <p>AWS Educate: Introduction to Cloud 101</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🔐</div>
+                <p>IBM: Cybersecurity Fundamentals</p>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-badge-icon">🎯</div>
+                <p>IBM: Threat Intelligence and Hunting</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-subtitle">Get In Touch</div>
+            <h2 class="section-title">Let's Work Together</h2>
+            <p class="section-description">
+                I'm always open to discussing new projects, opportunities, or partnerships
+            </p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <h3>Location</h3>
+                <p>Linbro Park, Sandton<br>Gauteng, South Africa</p>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <h3>Email</h3>
+                <a href="mailto:tlotlomolefem@gmail.com">tlotlomolefem@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <h3>Phone</h3>
+                <a href="tel:0769939594">076 993 9594</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">💼</div>
+                <h3>LinkedIn</h3>
+                <a href="https://www.linkedin.com/in/tlotlo-molefe-b9527129" target="_blank">Connect with me</a>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">💻</div>
+                <h3>GitHub</h3>
+                <a href="https://github.com/MTMolefe" target="_blank">View my code</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Tlotlo Molefe. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(
